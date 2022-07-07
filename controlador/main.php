@@ -4,42 +4,41 @@
 		
 		public function __construct(){
 			require_once "modelo/mainModel.php";
+			require_once "modelo/bitacoraModel.php";
 		}
 		
 		public function index(){
 			
-			$modelo=new main_model();
-			$tasa_dolar=$modelo->get_tasa();
+			 $modelo=new main_model();
+			 $modelo_bitacora=new bitacora_model();
+			 $resp=0;
             
 			if(isset($_GET['init'])){
 				$modelo->set_user($_POST['usuario'],$_POST['clave']);
 				$resultado=$modelo->get_inicio();
-				if(count($resultado)>0){
-					require_once "vista/main.php";	
-				}
-				else{
-					echo "<script>alert('Algo ha salido mal, revisa los datos e intenta nuevamente');</script>";
-					require_once "vista/login.php";	
+				if(count($resultado)>0){	
+					$resp=1;
 				}
 			}
 			else{
-				require_once "vista/main.php";	
+				$resp=1;
 			 }
-			echo "holaaa";
+
+			 if($resp==1){
+				$fecha = new DateTime('NOW', new DateTimeZone('America/Caracas'));
+				$fecha=$fecha->format('H:i:s A');
+                  $modelo_bitacora->set_inicio($_POST['usuario'],$fecha);
+				  $modelo_bitacora->registrar();
+			 }
+
+			 echo $resp;
 		
 		}
 
-		public function changeTasa(){
-			$modelo=new main_model();
-			$resultado=$modelo->changeTasa($_POST['inputBs']);
-			if($resultado==1){
-				header('Location: index.php?c=main&a=index');
-				Die();
-			}
-			else{
-				echo $resultado;
-			}
+		public function main_view(){
+			require_once "vista/main.php";
 		}
+
 		
 	}
 ?>

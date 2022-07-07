@@ -61,6 +61,9 @@ function buscar_usuario(){
       "clave":clave.value
     }
   }).done(function(result){
-    alert(result);
+    console.log(result);
+    if(result==1){
+      location.href="index.php?c=main&a=main_view";
+    }
   })
 }

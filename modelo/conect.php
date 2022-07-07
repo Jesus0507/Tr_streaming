@@ -2,8 +2,8 @@
 
 class base_datos extends PDO {
 	public $host="localhost";
-	public $bd="tr_streaming";
-	public $password="";
+	public $bd="tr_db";
+	public $password="root";
 	public $usuario="root";
 	public $conexion;
 	public $error;

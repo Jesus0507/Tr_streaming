@@ -19,7 +19,7 @@ require_once "conect.php";
 
 		public function get_inicio(){
 		 
-				$query = "SELECT * FROM usuarios WHERE cedula_usuario='$this->usuario' AND contrasenia='$this->clave'";
+				$query = "SELECT * FROM usuarios WHERE cedula='$this->usuario' AND pw='$this->clave'";
 				try {
 					$resultado = $this->conexion->prepare($query);
 					$resultado->execute();
